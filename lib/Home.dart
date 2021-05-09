@@ -8,42 +8,62 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String qrCode = 'Unknown';
-
+  String qrCode = "";
+  double width, height;
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Scan Result',
+  Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width / 100;
+    height = MediaQuery.of(context).size.height / 100;
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: height * 5,
+              width: width * 40,
+              alignment: Alignment.center,
+              child: Text(
+                "Scan Result",
                 style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white54,
+                  fontSize: height * 1.7,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
-              Text(
-                '$qrCode',
-                style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-              SizedBox(height: 72),
-              InkWell(
-                onTap: () {
-                  scanQRCode();
-                },
-                child: Text('Start QR scan'),
-              ),
-            ],
-          ),
+            ),
+            SizedBox(height: height),
+            Text(
+              '$qrCode',
+              style: TextStyle(
+                  fontSize: height * 1.5,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+            SizedBox(height: height * 20),
+            InkWell(
+              onTap: () {
+                scanQRCode();
+              },
+              child: Container(
+                  width: width * 40,
+                  height: height * 5,
+                  color: Colors.lightBlue,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Start Scan',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: height * 1.6,
+                        fontWeight: FontWeight.bold),
+                  )),
+            ),
+          ],
         ),
-      );
+      ),
+    );
+  }
 
   Future<void> scanQRCode() async {
     try {
